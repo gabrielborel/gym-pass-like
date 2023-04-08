@@ -38,13 +38,13 @@ describe('Register User Service', () => {
       password: '123456',
     });
 
-    expect(async () => {
-      await sut.execute({
+    await expect(() =>
+      sut.execute({
         name: 'John Doe',
         email,
         password: '123456',
-      });
-    }).rejects.toBeInstanceOf(UserAlreadyExistsError);
+      })
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError);
   });
 
   it('should not be able to register a user', async () => {

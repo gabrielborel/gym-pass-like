@@ -29,10 +29,10 @@ describe('Get User Profile Service', () => {
   });
 
   it('should not be able to get a user profile, if the user does not exists', async () => {
-    expect(async () => {
-      await sut.execute({
+    await expect(() =>
+      sut.execute({
         userId: 'not-valid-user-id',
-      });
-    }).rejects.toBeInstanceOf(UserNotFoundError);
+      })
+    ).rejects.toBeInstanceOf(UserNotFoundError);
   });
 });

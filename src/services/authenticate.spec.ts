@@ -29,12 +29,12 @@ describe('Authenticate User Service', () => {
   });
 
   it('should not be able to authenticate a user, if the email is invalid', async () => {
-    expect(async () => {
-      await sut.execute({
+    await expect(() =>
+      sut.execute({
         email: 'not-valid-email@email.com',
         password: '123456',
-      });
-    }).rejects.toBeInstanceOf(UserInvalidCredentialsError);
+      })
+    ).rejects.toBeInstanceOf(UserInvalidCredentialsError);
   });
 
   it('should not be able to authenticate a user, if the password is invalid', async () => {
@@ -44,11 +44,11 @@ describe('Authenticate User Service', () => {
       password_hash: await hash('123456', 6),
     });
 
-    expect(async () => {
-      await sut.execute({
+    await expect(() =>
+      sut.execute({
         email: 'johndoe@email.com',
         password: '654321',
-      });
-    }).rejects.toBeInstanceOf(UserInvalidCredentialsError);
+      })
+    ).rejects.toBeInstanceOf(UserInvalidCredentialsError);
   });
 });
