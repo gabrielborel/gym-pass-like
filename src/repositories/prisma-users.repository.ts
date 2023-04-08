@@ -10,4 +10,8 @@ export class PrismaUsersRepository implements IUsersRepository {
   async findByEmail(email: string) {
     return await prismaClient.user.findUnique({ where: { email } });
   }
+
+  async findById(id: string) {
+    return await prismaClient.user.findUnique({ where: { id } });
+  }
 }
