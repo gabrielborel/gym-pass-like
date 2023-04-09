@@ -18,4 +18,17 @@ export class InMemoryCheckInsRepository implements ICheckInsRepository {
 
     return checkIn;
   }
+
+  async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
+    const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    const endOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
+    const checkInOnSameDate = this.checkIns.find((c) => {
+      const checkInDay = new Date(c.created_at).getTime();
+      if (c.user_id === userId && checkInDay >= startOfDay && checkInDay <= endOfDay) {
+        return true;
+      }
+    });
+    if (!checkInOnSameDate) return null;
+    return checkInOnSameDate;
+  }
 }
