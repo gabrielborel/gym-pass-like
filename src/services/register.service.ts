@@ -16,16 +16,13 @@ interface IRegisterUserServiceResponse {
 export class RegisterUserService {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute(
-    request: IRegisterUserServiceRequest
-  ): Promise<IRegisterUserServiceResponse> {
+  async execute(request: IRegisterUserServiceRequest): Promise<IRegisterUserServiceResponse> {
     const { name, password, email } = request;
-    const password_hash = await hash(password, 6);
 
     const emailAlreadyExists = await this.usersRepository.findByEmail(email);
-
     if (emailAlreadyExists) throw new UserAlreadyExistsError();
 
+    const password_hash = await hash(password, 6);
     const user = await this.usersRepository.create({
       email,
       name,

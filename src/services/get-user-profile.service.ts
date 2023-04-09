@@ -13,13 +13,10 @@ interface IGetUserProfileResponse {
 export class GetUserProfileService {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute(
-    request: IGetUserProfileRequest
-  ): Promise<IGetUserProfileResponse> {
+  async execute(request: IGetUserProfileRequest): Promise<IGetUserProfileResponse> {
     const { userId } = request;
 
     const user = await this.usersRepository.findById(userId);
-
     if (!user) throw new UserNotFoundError();
 
     return { user };
