@@ -17,7 +17,9 @@ interface ICreateGymServiceResponse {
 export class CreateGymService {
   constructor(private gymsRepository: IGymsRepository) {}
 
-  async execute(request: ICreateGymServiceRequest): Promise<ICreateGymServiceResponse> {
+  async execute(
+    request: ICreateGymServiceRequest
+  ): Promise<ICreateGymServiceResponse> {
     const { name, description, latitude, longitude, phone } = request;
 
     const gym = await this.gymsRepository.create({
