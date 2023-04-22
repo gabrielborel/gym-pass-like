@@ -1,9 +1,9 @@
-import { CheckIn, Prisma, User } from '@prisma/client';
+import { CheckIn, Prisma } from '@prisma/client';
 import { ICheckInsRepository } from '../check-ins-repository.interface';
 import crypto from 'node:crypto';
 
 export class InMemoryCheckInsRepository implements ICheckInsRepository {
-  private checkIns: CheckIn[] = [];
+  public checkIns: CheckIn[] = [];
 
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
@@ -56,5 +56,19 @@ export class InMemoryCheckInsRepository implements ICheckInsRepository {
 
   async countByUserId(userId: string): Promise<number> {
     return this.checkIns.filter((c) => c.user_id === userId).length;
+  }
+
+  async findById(id: string): Promise<CheckIn | null> {
+    return this.checkIns.find((c) => c.id === id) || null;
+  }
+
+  async save(checkIn: CheckIn): Promise<CheckIn> {
+    const checkInIndex = this.checkIns.findIndex((c) => c.id === checkIn.id);
+    if (checkInIndex >= 0) {
+      this.checkIns[checkInIndex] = checkIn;
+      return checkIn;
+    }
+
+    return checkIn;
   }
 }

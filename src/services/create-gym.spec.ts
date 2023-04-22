@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms.repository';
 import { CreateGymService } from './create-gym.service';
 

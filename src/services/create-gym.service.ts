@@ -1,6 +1,5 @@
 import { IGymsRepository } from '@/repositories/gyms-repository.interface';
-import { IUsersRepository } from '@/repositories/users-repository.interface';
-import { Gym, User } from '@prisma/client';
+import { Gym } from '@prisma/client';
 
 interface ICreateGymServiceRequest {
   name: string;

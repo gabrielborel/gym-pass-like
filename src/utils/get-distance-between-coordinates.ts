@@ -7,7 +7,6 @@ export function getDistanceBetweenCoordinates(
   from: ICoordinate,
   to: ICoordinate
 ) {
-  console.log(from, to);
   const R = 6371;
   const φ1 = (from.latitude * Math.PI) / 180;
   const φ2 = (to.latitude * Math.PI) / 180;
