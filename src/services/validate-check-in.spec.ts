@@ -2,6 +2,7 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-c
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ValidateCheckInService } from './validate-check-in.service';
 import { CheckInNotFoundError } from './errors/check-in-not-found.error';
+import { LateCheckInValidationError } from './errors/late-check-in-validation.error';
 
 let checkInsRepository: InMemoryCheckInsRepository;
 let sut: ValidateCheckInService;
@@ -36,7 +37,7 @@ describe('Validate CheckIn Service', () => {
     ).rejects.toBeInstanceOf(CheckInNotFoundError);
   });
 
-  it('should not be able to validete a check-in after 20 minutes of its creation', async () => {
+  it('should not be able to validate a check-in after 20 minutes of its creation', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2023, 0, 1, 13, 40));
 
@@ -47,11 +48,11 @@ describe('Validate CheckIn Service', () => {
 
     const TWENTY_ONE_MINUTES_IN_MS = 21 * 60 * 1000;
     vi.advanceTimersByTime(TWENTY_ONE_MINUTES_IN_MS);
-
+  
     await expect(() =>
       sut.execute({
         checkInId: createdcheckIn.id,
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(LateCheckInValidationError);
   });
 });
