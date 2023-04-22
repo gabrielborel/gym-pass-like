@@ -1,6 +1,9 @@
-import { prismaClient } from "@/lib/prisma";
-import { Prisma, Gym } from "@prisma/client";
-import { IFindManyNearbyParams, IGymsRepository } from "../gyms-repository.interface";
+import { prismaClient } from '@/lib/prisma';
+import { Prisma, Gym } from '@prisma/client';
+import {
+  IFindManyNearbyParams,
+  IGymsRepository,
+} from '../gyms-repository.interface';
 
 export class PrismaGymsRepository implements IGymsRepository {
   async create(data: Prisma.GymCreateInput): Promise<Gym> {
@@ -21,7 +24,7 @@ export class PrismaGymsRepository implements IGymsRepository {
     return await prismaClient.gym.findMany({
       where: {
         name: {
-          contains: query
+          contains: query,
         },
       },
       take: 20,
@@ -29,10 +32,13 @@ export class PrismaGymsRepository implements IGymsRepository {
     });
   }
 
-  async findManyNearby({ latitude, longitude }: IFindManyNearbyParams): Promise<Gym[]> {
+  async findManyNearby({
+    latitude,
+    longitude,
+  }: IFindManyNearbyParams): Promise<Gym[]> {
     return await prismaClient.$queryRaw<Gym[]>`
       SELECT * FROM gyms
       WHERE ( 6371 * acos( cos ( radians(${latitude}) ) * cos( radians( latitude )) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) )
-    `; 
+    `;
   }
 }

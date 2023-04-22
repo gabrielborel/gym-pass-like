@@ -48,7 +48,7 @@ describe('Validate CheckIn Service', () => {
 
     const TWENTY_ONE_MINUTES_IN_MS = 21 * 60 * 1000;
     vi.advanceTimersByTime(TWENTY_ONE_MINUTES_IN_MS);
-  
+
     await expect(() =>
       sut.execute({
         checkInId: createdcheckIn.id,
