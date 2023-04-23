@@ -1,8 +1,8 @@
-import { PrismaGymsRepository } from '@/repositories/implementations/prisma-gyms.repository';
-import { FetchNearbyGymsService } from '../fetch-nearby-gyms.service';
+import { FetchUserCheckInsHistoryService } from '../fetch-user-check-ins-history.service';
+import { PrismaCheckInsRepository } from '@/repositories/implementations/prisma-check-ins.repository';
 
-export function makeFetchNearbyGymsService() {
-  const gymsRepository = new PrismaGymsRepository();
-  const service = new FetchNearbyGymsService(gymsRepository);
+export function makeFetchUserCheckInsHistoryService() {
+  const checkInsRepository = new PrismaCheckInsRepository();
+  const service = new FetchUserCheckInsHistoryService(checkInsRepository);
   return service;
 }
